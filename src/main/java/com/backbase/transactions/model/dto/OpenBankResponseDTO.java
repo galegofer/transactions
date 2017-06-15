@@ -3,6 +3,8 @@ package com.backbase.transactions.model.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.ObjectUtils;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -19,10 +21,13 @@ public class OpenBankResponseDTO {
     private List<Object> transactions;
 
     public OpenBankResponseDTO() {
-        this.transactions = new ArrayList<>();
     }
 
     public List<Object> getTransactions() {
+        if (ObjectUtils.isEmpty(transactions)) {
+            this.transactions = new ArrayList<>();
+        }
+
         return transactions;
     }
 

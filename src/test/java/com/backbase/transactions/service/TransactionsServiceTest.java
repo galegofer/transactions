@@ -116,7 +116,7 @@ public class TransactionsServiceTest {
 
         assertEquals(0, bbTransactions.stream().count());
     }
-    
+
     @Test
     public void testGetTransactionsPerTypeEmptyNoMatch() {
         String transactionType = "no-match";
@@ -155,7 +155,7 @@ public class TransactionsServiceTest {
 
         assertEquals(Double.valueOf(10d), actualAmount);
     }
-    
+
     @Test
     public void testGetTransactionTotalsPerTypeNoEmptyNoMatch() {
         String transactionType = "no-match";
