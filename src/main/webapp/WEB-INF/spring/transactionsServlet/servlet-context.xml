@@ -29,7 +29,11 @@
 	<resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
 	<resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
 
+	<!-- Application startup listener -->
+	<beans:bean name="applicationLoadListener"
+		class="com.backbase.transactions.swagger.ApplicationLoadListener" />
 	<!-- Include a swagger configuration -->
-	<beans:bean name="/applicationSwaggerConfig" class="com.backbase.transactions.swagger.SwaggerConfiguration" />
+	<beans:bean name="/applicationSwaggerConfig"
+		class="com.backbase.transactions.swagger.SwaggerConfiguration" />
 
 </beans:beans>
