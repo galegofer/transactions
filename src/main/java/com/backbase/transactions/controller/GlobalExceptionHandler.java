@@ -20,14 +20,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-	
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
     private ResponseEntity<Object> handleValidationException(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "Error while handling parameters, problem is: " + ex.getMessage();
 
         LOGGER.info(bodyOfResponse);
-        
+
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String bodyOfResponse = "Error while communicating with server, problem is: " + ex.getMessage();
 
         LOGGER.info(bodyOfResponse);
-        
+
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }

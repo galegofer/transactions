@@ -22,17 +22,17 @@ import com.google.common.cache.CacheBuilder;
 @EnableCaching
 public class CacheConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CacheConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CacheConfiguration.class);
 
-	@Bean
-	public CacheManager cacheManager() {
-		GuavaCacheManager cacheManager = new GuavaCacheManager("transaction-list", "transaction-per-type",
-				"transaction-per-type-amount");
-		CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES);
-		cacheManager.setCacheBuilder(cacheBuilder);
+    @Bean
+    public CacheManager cacheManager() {
+        GuavaCacheManager cacheManager = new GuavaCacheManager("transaction-list", "transaction-per-type",
+                "transaction-per-type-amount");
+        CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES);
+        cacheManager.setCacheBuilder(cacheBuilder);
 
-		LOGGER.info("Cache initialized with name/s '{}'", cacheManager.getCacheNames());
+        LOGGER.info("Cache initialized with name/s '{}'", cacheManager.getCacheNames());
 
-		return cacheManager;
-	}
+        return cacheManager;
+    }
 }

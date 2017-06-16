@@ -47,7 +47,7 @@ public class TransactionsController {
         List<BBResponseDTO> transactionsList = transactionsService.getTransactionsList();
 
         LOGGER.debug("getTransactionsList returned: '{}'", transactionsList);
-        
+
         return ResponseEntity.ok().body(transactionsList);
     }
 
@@ -73,7 +73,7 @@ public class TransactionsController {
         List<BBResponseDTO> transactionsPerType = transactionsService.getTransactionsPerType(transactionType);
 
         LOGGER.debug("getTransactionsPerType returned: '{}'", transactionsPerType);
-        
+
         return ResponseEntity.ok().body(transactionsPerType);
     }
 
@@ -99,7 +99,7 @@ public class TransactionsController {
         Double transactionTotalsPerType = transactionsService.getTransactionTotalsPerType(transactionType);
 
         LOGGER.debug("getTransactionTotalsPerType returned: '{}'", transactionTotalsPerType);
-        
+
         return ResponseEntity.ok().body(transactionTotalsPerType);
     }
 }
