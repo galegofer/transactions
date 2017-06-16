@@ -11,6 +11,7 @@ import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,7 @@ public class TransactionsService {
      * @return a list with all the transactions, converted using the required
      *         mapping or empty if no one was found.
      */
+    @Cacheable("transaction-list")
     public List<BBResponseDTO> getTransactionsList() {
         ResponseEntity<OpenBankResponseDTO> response = restTemplate.getForEntity(bankUrl, OpenBankResponseDTO.class);
 
@@ -106,6 +108,7 @@ public class TransactionsService {
      *         converted using the required mapping or empty if no one was
      *         found.
      */
+    @Cacheable("transaction-per-type")
     public List<BBResponseDTO> getTransactionsPerType(String transactionType) {
         ResponseEntity<OpenBankResponseDTO> response = restTemplate.getForEntity(bankUrl, OpenBankResponseDTO.class);
 
@@ -137,6 +140,7 @@ public class TransactionsService {
      * @return a accumulation of the amount filtered by the given transaction
      *         type.
      */
+    @Cacheable("transaction-per-type-amount")
     public Double getTransactionTotalsPerType(String transactionType) {
         ResponseEntity<OpenBankResponseDTO> response = restTemplate.getForEntity(bankUrl, OpenBankResponseDTO.class);
 

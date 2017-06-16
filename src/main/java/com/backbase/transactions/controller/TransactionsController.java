@@ -46,6 +46,8 @@ public class TransactionsController {
 
         List<BBResponseDTO> transactionsList = transactionsService.getTransactionsList();
 
+        LOGGER.debug("getTransactionsList returned: '{}'", transactionsList);
+        
         return ResponseEntity.ok().body(transactionsList);
     }
 
@@ -70,6 +72,8 @@ public class TransactionsController {
 
         List<BBResponseDTO> transactionsPerType = transactionsService.getTransactionsPerType(transactionType);
 
+        LOGGER.debug("getTransactionsPerType returned: '{}'", transactionsPerType);
+        
         return ResponseEntity.ok().body(transactionsPerType);
     }
 
@@ -90,10 +94,12 @@ public class TransactionsController {
             @PathVariable("transactionType") String transactionType) {
         Validate.notBlank(transactionType, "Transaction type must be not null or empty");
 
-        LOGGER.info("Start getTransactionsPerType with transaction type: '{}'", transactionType);
+        LOGGER.info("Start getTransactionTotalsPerType with transaction type: '{}'", transactionType);
 
         Double transactionTotalsPerType = transactionsService.getTransactionTotalsPerType(transactionType);
 
+        LOGGER.debug("getTransactionTotalsPerType returned: '{}'", transactionTotalsPerType);
+        
         return ResponseEntity.ok().body(transactionTotalsPerType);
     }
 }

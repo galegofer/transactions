@@ -1,5 +1,7 @@
 package com.backbase.transactions.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+	
     @ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
     private ResponseEntity<Object> handleValidationException(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "Error while handling parameters, problem is: " + ex.getMessage();
 
+        LOGGER.info(bodyOfResponse);
+        
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
@@ -29,6 +35,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleCommunicationException(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "Error while communicating with server, problem is: " + ex.getMessage();
 
+        LOGGER.info(bodyOfResponse);
+        
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
