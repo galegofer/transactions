@@ -1,12 +1,9 @@
 package com.backbase.transactions.security;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,30 +16,27 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author Damian
  */
 @Configuration
+@PropertySource("classpath:application.properties")
 @EnableWebSecurity
 public class BBWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BBWebSecurityConfigurerAdapter.class);
-
     @Autowired
     private BBBasicAuthenticationEntryPoint authenticationEntryPoint;
-    private Properties properties;
+
+    @Autowired
+    private Environment env;
 
     public BBWebSecurityConfigurerAdapter() {
-        try {
-            properties = new Properties();
-            properties.load(this.getClass().getResourceAsStream("/application.properties"));
-        } catch (IOException e) {
-            LOGGER.error("Error while trying to laod user names and passwords");
-        }
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         // TODO: we should store this values preferable in a database or
         // somewhere else, just left in that way for demonstration purposes.
-        String user = properties.getProperty("user");
-        String password = properties.getProperty("password");
+        String user = env.getProperty("user");
+        String password = env.getProperty("password");
 
+        System.out.println("Reading user: " + user + " pass: " + password);
+        
         auth.inMemoryAuthentication().withUser(user).password(password).authorities("ROLE_USER");
     }
 

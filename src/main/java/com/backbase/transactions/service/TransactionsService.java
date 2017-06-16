@@ -2,16 +2,19 @@ package com.backbase.transactions.service;
 
 import static java.util.stream.Collectors.toList;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.function.Function;
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,7 @@ import com.jayway.jsonpath.JsonPath;
  * @author Damian
  */
 @Service
+@PropertySource("classpath:application.properties")
 public class TransactionsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionsService.class);
@@ -36,17 +40,10 @@ public class TransactionsService {
     private final Function<Object, BBResponseDTO> typeConverter;
     private String bankUrl;
 
-    public TransactionsService() {
-        try {
-            Properties properties = new Properties();
-            properties.load(this.getClass().getResourceAsStream("/application.properties"));
-            bankUrl = properties.getProperty("open_bank_url");
-        } catch (IOException e) {
-            bankUrl = "http://localhost:8080";
-            LOGGER.error("Error while loocking for 'open_bank_url' variable, using default one to: ",
-                    "http://localhost:8080");
-        }
+    @Autowired
+    private Environment env;
 
+    public TransactionsService() {
         restTemplate = new RestTemplate();
 
         // Converts the response from OpenBank to Backbase format.
@@ -68,6 +65,11 @@ public class TransactionsService {
 
             return bbResponseDTO;
         };
+    }
+
+    @PostConstruct
+    public void init() {
+        bankUrl = env.getProperty("open_bank_url");
     }
 
     /**
