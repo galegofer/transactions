@@ -6,6 +6,7 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,7 @@ public class TransactionsController {
      *         mapping.
      */
     @ApiOperation(value = "Retrieves all the existing transactions")
-    @RequestMapping(value = "/transactions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/transactions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<Object> getTransactionsList() {
         LOGGER.info("Start getTransactionsList");
 
@@ -48,7 +49,7 @@ public class TransactionsController {
 
         LOGGER.debug("getTransactionsList returned: '{}'", transactionsList);
 
-        return ResponseEntity.ok().body(transactionsList);
+        return new ResponseEntity<>(transactionsList, HttpStatus.OK);
     }
 
     /**
@@ -63,7 +64,7 @@ public class TransactionsController {
      *         converted using the required mapping.
      */
     @ApiOperation(value = "Retrieves all existing transactions associated with the given transaction id")
-    @RequestMapping(value = "/{transactionType}/transactions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{transactionType}/transactions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<Object> getTransactionsPerType(
             @PathVariable("transactionType") String transactionType) {
         Validate.notBlank(transactionType, "Transaction type must be not null or empty");
@@ -74,7 +75,7 @@ public class TransactionsController {
 
         LOGGER.debug("getTransactionsPerType returned: '{}'", transactionsPerType);
 
-        return ResponseEntity.ok().body(transactionsPerType);
+        return new ResponseEntity<>(transactionsPerType, HttpStatus.OK);
     }
 
     /**
@@ -89,7 +90,7 @@ public class TransactionsController {
      *         type.
      */
     @ApiOperation(value = "Retrieves all the accumulative amounts for the specified transactionType")
-    @RequestMapping(value = "/{transactionType}/totalAmmount", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{transactionType}/totalAmmount", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<Object> getTransactionTotalsPerType(
             @PathVariable("transactionType") String transactionType) {
         Validate.notBlank(transactionType, "Transaction type must be not null or empty");
@@ -100,6 +101,6 @@ public class TransactionsController {
 
         LOGGER.debug("getTransactionTotalsPerType returned: '{}'", transactionTotalsPerType);
 
-        return ResponseEntity.ok().body(transactionTotalsPerType);
+        return new ResponseEntity<>(transactionTotalsPerType, HttpStatus.OK);
     }
 }
