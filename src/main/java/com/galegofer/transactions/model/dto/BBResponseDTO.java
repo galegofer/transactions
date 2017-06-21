@@ -1,4 +1,4 @@
-package com.backbase.transactions.model.dto;
+package com.galegofer.transactions.model.dto;
 
 /**
  * Data Transfer Object that represents the mapped object from Openbank to

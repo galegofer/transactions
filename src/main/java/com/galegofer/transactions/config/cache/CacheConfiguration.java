@@ -1,4 +1,4 @@
-package com.backbase.transactions.config.cache;
+package com.galegofer.transactions.config.cache;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,4 +1,4 @@
-package com.backbase.transactions.swagger;
+package com.galegofer.transactions.swagger;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 

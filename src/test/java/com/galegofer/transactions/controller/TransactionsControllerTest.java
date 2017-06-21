@@ -1,4 +1,4 @@
-package com.backbase.transactions.controller;
+package com.galegofer.transactions.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,8 +23,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.ObjectUtils;
 
-import com.backbase.transactions.model.dto.BBResponseDTO;
-import com.backbase.transactions.service.TransactionsService;
+import com.galegofer.transactions.controller.GlobalExceptionHandler;
+import com.galegofer.transactions.controller.TransactionsController;
+import com.galegofer.transactions.model.dto.BBResponseDTO;
+import com.galegofer.transactions.service.TransactionsService;
 
 public class TransactionsControllerTest {
 

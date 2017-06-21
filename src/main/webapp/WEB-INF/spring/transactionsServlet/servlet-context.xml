@@ -23,7 +23,7 @@
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 	</beans:bean>
 
-	<context:component-scan base-package="com.backbase.transactions" />
+	<context:component-scan base-package="com.galegofer.transactions" />
 
 	<!-- Enables swgger ui -->
 	<resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
@@ -31,9 +31,9 @@
 
 	<!-- Application startup listener -->
 	<beans:bean name="applicationLoadListener"
-		class="com.backbase.transactions.swagger.ApplicationLoadListener" />
+		class="com.galegofer.transactions.swagger.ApplicationLoadListener" />
 	<!-- Include a swagger configuration -->
 	<beans:bean name="/applicationSwaggerConfig"
-		class="com.backbase.transactions.swagger.SwaggerConfiguration" />
+		class="com.galegofer.transactions.swagger.SwaggerConfiguration" />
 
 </beans:beans>

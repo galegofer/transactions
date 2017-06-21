@@ -1,4 +1,4 @@
-package com.backbase.transactions.service;
+package com.galegofer.transactions.service;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,8 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.backbase.transactions.model.dto.BBResponseDTO;
-import com.backbase.transactions.model.dto.OpenBankResponseDTO;
+import com.galegofer.transactions.model.dto.BBResponseDTO;
+import com.galegofer.transactions.model.dto.OpenBankResponseDTO;
 import com.jayway.jsonpath.JsonPath;
 
 /**
@@ -46,7 +46,7 @@ public class TransactionsService {
     public TransactionsService() {
         restTemplate = new RestTemplate();
 
-        // Converts the response from OpenBank to Backbase format.
+        // Converts the response from OpenBank to our format.
         typeConverter = transactionDTO -> {
             BBResponseDTO bbResponseDTO = new BBResponseDTO();
             bbResponseDTO.setId(JsonPath.read(transactionDTO, "$.id"));
@@ -61,7 +61,7 @@ public class TransactionsService {
             bbResponseDTO.setTransactionType(JsonPath.read(transactionDTO, "$.details.type"));
             bbResponseDTO.setDescription(JsonPath.read(transactionDTO, "$.details.description"));
 
-            LOGGER.debug("Converting OpenBank response: '{}' to Backbase one: '{}'", transactionDTO, bbResponseDTO);
+            LOGGER.debug("Converting OpenBank response: '{}' to custom one: '{}'", transactionDTO, bbResponseDTO);
 
             return bbResponseDTO;
         };

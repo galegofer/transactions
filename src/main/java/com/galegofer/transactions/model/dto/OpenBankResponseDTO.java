@@ -1,4 +1,4 @@
-package com.backbase.transactions.model.dto;
+package com.galegofer.transactions.model.dto;
 
 import java.util.ArrayList;
 import java.util.List;

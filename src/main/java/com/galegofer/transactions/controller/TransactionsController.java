@@ -1,4 +1,4 @@
-package com.backbase.transactions.controller;
+package com.galegofer.transactions.controller;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.backbase.transactions.model.dto.BBResponseDTO;
-import com.backbase.transactions.service.TransactionsService;
+import com.galegofer.transactions.model.dto.BBResponseDTO;
+import com.galegofer.transactions.service.TransactionsService;
 
 import io.swagger.annotations.ApiOperation;
 

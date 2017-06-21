@@ -1,4 +1,4 @@
-package com.backbase.transactions.service;
+package com.galegofer.transactions.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -16,8 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.backbase.transactions.model.dto.BBResponseDTO;
-import com.backbase.transactions.model.dto.OpenBankResponseDTO;
+import com.galegofer.transactions.model.dto.BBResponseDTO;
+import com.galegofer.transactions.model.dto.OpenBankResponseDTO;
+import com.galegofer.transactions.service.TransactionsService;
 import com.jayway.jsonpath.JsonPath;
 
 import net.minidev.json.JSONObject;

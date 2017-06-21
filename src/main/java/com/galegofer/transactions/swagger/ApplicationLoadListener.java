@@ -1,4 +1,4 @@
-package com.backbase.transactions.swagger;
+package com.galegofer.transactions.swagger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

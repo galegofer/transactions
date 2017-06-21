@@ -13,7 +13,7 @@
 	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>com.backbase.transactions.security</param-value>
+		<param-value>com.galegofer.transactions.security</param-value>
 	</context-param>
 
 	<listener>
