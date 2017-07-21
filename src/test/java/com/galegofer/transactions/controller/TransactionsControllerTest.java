@@ -23,8 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.ObjectUtils;
 
-import com.galegofer.transactions.controller.GlobalExceptionHandler;
-import com.galegofer.transactions.controller.TransactionsController;
 import com.galegofer.transactions.model.dto.BBResponseDTO;
 import com.galegofer.transactions.service.TransactionsService;
 
@@ -48,7 +46,6 @@ public class TransactionsControllerTest {
     @Test
     public void testGetTransactionsListNoEmptyResponse() throws Exception {
         List<BBResponseDTO> response = new ArrayList<>();
-        response.add(new BBResponseDTO());
 
         when(transactionsService.getTransactionsList()).thenReturn(response);
 
@@ -79,7 +76,6 @@ public class TransactionsControllerTest {
     @Test
     public void testGetTransactionsPerTypeNoEmptyTransactionTypeNoEmptyResponse() throws Exception {
         List<BBResponseDTO> response = new ArrayList<>();
-        response.add(new BBResponseDTO());
 
         when(transactionsService.getTransactionsPerType(Mockito.anyString())).thenReturn(response);
 

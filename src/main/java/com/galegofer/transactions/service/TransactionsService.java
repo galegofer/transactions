@@ -1,11 +1,11 @@
 package com.galegofer.transactions.service;
 
-import static java.util.stream.Collectors.toList;
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -48,18 +48,22 @@ public class TransactionsService {
 
         // Converts the response from OpenBank to our format.
         typeConverter = transactionDTO -> {
-            BBResponseDTO bbResponseDTO = new BBResponseDTO();
-            bbResponseDTO.setId(JsonPath.read(transactionDTO, "$.id"));
-            bbResponseDTO.setAccountId(JsonPath.read(transactionDTO, "$.this_account.id"));
-            bbResponseDTO.setCounterpartyAccount(JsonPath.read(transactionDTO, "$.other_account.number"));
-            bbResponseDTO.setCounterpartyName(JsonPath.read(transactionDTO, "$.other_account.holder.name"));
-            bbResponseDTO.setCounterPartyLogoPath(JsonPath.read(transactionDTO, "$.other_account.metadata.image_URL"));
-            bbResponseDTO.setInstructedAmount(Double.valueOf(JsonPath.read(transactionDTO, "$.details.value.amount")));
-            bbResponseDTO.setInstructedCurrency(JsonPath.read(transactionDTO, "$.details.value.currency"));
-            bbResponseDTO.setTransactionAmount(Double.valueOf(JsonPath.read(transactionDTO, "$.details.value.amount")));
-            bbResponseDTO.setTransactionCurrency(JsonPath.read(transactionDTO, "$.details.value.currency"));
-            bbResponseDTO.setTransactionType(JsonPath.read(transactionDTO, "$.details.type"));
-            bbResponseDTO.setDescription(JsonPath.read(transactionDTO, "$.details.description"));
+
+            String id = JsonPath.read(transactionDTO, "$.id");
+            String accountId = JsonPath.read(transactionDTO, "$.this_account.id");
+            String counterpartyAccount = JsonPath.read(transactionDTO, "$.other_account.number");
+            String counterpartyName = JsonPath.read(transactionDTO, "$.other_account.holder.name");
+            String counterPartyLogoPath = JsonPath.read(transactionDTO, "$.other_account.metadata.image_URL");
+            Double instructedAmount = Double.valueOf(JsonPath.read(transactionDTO, "$.details.value.amount"));
+            String instructedCurrency = JsonPath.read(transactionDTO, "$.details.value.currency");
+            Double transactionAmount = Double.valueOf(JsonPath.read(transactionDTO, "$.details.value.amount"));
+            String transactionCurrency = JsonPath.read(transactionDTO, "$.details.value.currency");
+            String transactionType = JsonPath.read(transactionDTO, "$.details.type");
+            String description = JsonPath.read(transactionDTO, "$.details.description");
+
+            BBResponseDTO bbResponseDTO = new BBResponseDTO(id, accountId, counterpartyAccount, counterpartyName,
+                    counterPartyLogoPath, instructedAmount, instructedCurrency, transactionAmount, transactionCurrency,
+                    transactionType, description);
 
             LOGGER.debug("Converting OpenBank response: '{}' to custom one: '{}'", transactionDTO, bbResponseDTO);
 
@@ -90,8 +94,14 @@ public class TransactionsService {
 
             LOGGER.debug("Succesfuly got a response from OpenBank Server: '{}'", body);
 
-            return Optional.ofNullable(body).map(OpenBankResponseDTO::getTransactions).get().stream().map(typeConverter)
-                    .collect(toList());
+            List<BBResponseDTO> result = new ArrayList<>();
+
+            Optional.ofNullable(body).map(OpenBankResponseDTO::getTransactions).map(List::stream)
+                    .ifPresent(transactions -> {
+                        transactions.map(typeConverter).collect(Collectors.toCollection(() -> result));
+                    });
+
+            return result;
         } else {
             LOGGER.warn("Can't get transactions from service at url: '{}', response status was: '{}'", bankUrl, status);
         }
@@ -121,10 +131,17 @@ public class TransactionsService {
 
             LOGGER.debug("Succesfuly got a response from OpenBank Server: '{}'", body);
 
-            return Optional.ofNullable(body).map(OpenBankResponseDTO::getTransactions).get().stream()
-                    .filter(transactionDTO -> {
-                        return transactionType.equals(JsonPath.read(transactionDTO, "$.details.type"));
-                    }).map(typeConverter).collect(toList());
+            List<BBResponseDTO> result = new ArrayList<>();
+
+            Optional.ofNullable(body).map(OpenBankResponseDTO::getTransactions).map(List::stream)
+                    .ifPresent(transactions -> {
+                        transactions
+                                .filter(transactionDTO -> transactionType
+                                        .equals(JsonPath.read(transactionDTO, "$.details.type")))
+                                .map(typeConverter).collect(Collectors.toCollection(() -> result));
+                    });
+
+            return result;
         } else {
             LOGGER.warn("Can't get transactions per type from service at url: '{}', response status was: '{}'", bankUrl,
                     status);
@@ -153,10 +170,9 @@ public class TransactionsService {
 
             LOGGER.debug("Succesfuly got a response from OpenBank Server: '{}'", body);
 
-            return Optional.ofNullable(body).map(OpenBankResponseDTO::getTransactions).get().stream()
-                    .filter(transactionDTO -> {
-                        return transactionType.equals(JsonPath.read(transactionDTO, "$.details.type"));
-                    }).map(typeConverter).map(BBResponseDTO::getTransactionAmount)
+            return Optional.ofNullable(body).map(OpenBankResponseDTO::getTransactions).map(List::stream).get()
+                    .filter(transactionDTO -> transactionType.equals(JsonPath.read(transactionDTO, "$.details.type")))
+                    .map(typeConverter).map(BBResponseDTO::getTransactionAmount)
                     .reduce(0d, (previous, next) -> previous + next);
         } else {
             LOGGER.warn("Can't get transactions totals per type from service at url: '{}', response status was: '{}'",

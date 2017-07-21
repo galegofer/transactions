@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -18,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.galegofer.transactions.model.dto.BBResponseDTO;
 import com.galegofer.transactions.model.dto.OpenBankResponseDTO;
-import com.galegofer.transactions.service.TransactionsService;
 import com.jayway.jsonpath.JsonPath;
 
 import net.minidev.json.JSONObject;
@@ -47,8 +47,7 @@ public class TransactionsServiceTest {
         List<Object> list = new ArrayList<>();
         list.add(jsonBody);
 
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(list);
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
@@ -63,10 +62,7 @@ public class TransactionsServiceTest {
 
     @Test
     public void testGetTransactionsListEmpty() {
-        List<Object> list = new ArrayList<>();
-
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(Collections.emptyList());
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
@@ -85,8 +81,7 @@ public class TransactionsServiceTest {
         List<Object> list = new ArrayList<>();
         list.add(jsonBody);
 
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(list);
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
@@ -105,8 +100,7 @@ public class TransactionsServiceTest {
 
         List<Object> list = new ArrayList<>();
 
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(list);
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
@@ -124,8 +118,7 @@ public class TransactionsServiceTest {
 
         List<Object> list = new ArrayList<>();
 
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(list);
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
@@ -144,8 +137,7 @@ public class TransactionsServiceTest {
         List<Object> list = new ArrayList<>();
         list.add(jsonBody);
 
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(list);
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
@@ -164,8 +156,7 @@ public class TransactionsServiceTest {
         List<Object> list = new ArrayList<>();
         list.add(jsonBody);
 
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(list);
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
@@ -183,8 +174,7 @@ public class TransactionsServiceTest {
 
         List<Object> list = new ArrayList<>();
 
-        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO();
-        openBankResponseDTO.setTransactions(list);
+        OpenBankResponseDTO openBankResponseDTO = new OpenBankResponseDTO(list);
 
         ResponseEntity<OpenBankResponseDTO> response = new ResponseEntity<>(openBankResponseDTO, HttpStatus.OK);
 
